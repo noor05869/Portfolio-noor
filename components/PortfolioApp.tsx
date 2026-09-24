@@ -10,33 +10,47 @@ import Hero from './Hero';
 import Navbar from './Navbar';
 import Skills from './Skills';
 import Work from './Work';
+import CustomCursor from './CustomCursor';
+import CursorSpotlight from './CursorSpotlight';
+import GrainOverlay from './GrainOverlay';
+import SmoothScroll from './SmoothScroll';
+import ThreeBackground from './ThreeBackground';
 
 export default function PortfolioApp() {
   const [lightsOn, setLightsOn] = useState(false);
   const reduceMotion = useReducedMotion();
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background relative overflow-x-hidden">
+      <CustomCursor />
+      <CursorSpotlight />
+      <GrainOverlay />
+      <ThreeBackground />
+      
       <AnimatePresence mode="sync">
         {!lightsOn ? (
           <DarkState key="dark" onComplete={() => setLightsOn(true)} />
         ) : (
-          <motion.div
-            key="lit"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: reduceMotion ? 0 : 0.35 }}
-          >
-            <Navbar />
-            <Hero />
-            <About />
-            <Skills />
-            <Work />
-            <Contact />
-            <Footer />
-          </motion.div>
+          <SmoothScroll>
+            <motion.div
+              key="lit"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: reduceMotion ? 0 : 0.35 }}
+            >
+              <Navbar />
+              <Hero />
+              <About />
+              <Skills />
+              <Work />
+              <Contact />
+              <Footer />
+            </motion.div>
+          </SmoothScroll>
         )}
       </AnimatePresence>
     </main>
   );
 }
+
+
