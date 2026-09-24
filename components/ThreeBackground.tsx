@@ -118,7 +118,7 @@ export default function ThreeBackground() {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none fixed inset-0 z-0 opacity-70"
+      className="pointer-events-none fixed inset-0 z-0 opacity-35"
       aria-hidden="true"
     />
   );
