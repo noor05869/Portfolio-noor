@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 export default function HeroBulb3D() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -17,7 +18,13 @@ export default function HeroBulb3D() {
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.z = 7;
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    } catch {
+      setFailed(true);
+      return;
+    }
     renderer.setSize(380, 380);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
@@ -134,7 +141,42 @@ export default function HeroBulb3D() {
     <div className="relative flex items-center justify-center">
       {/* Background glow halo */}
       <div className="absolute h-72 w-72 rounded-full bg-amber/20 blur-3xl" />
-      <div ref={containerRef} className="relative z-10 h-[380px] w-[380px] cursor-grab active:cursor-grabbing" />
+      {failed ? (
+        <div className="relative z-10 flex h-[380px] w-[380px] items-center justify-center">
+          <svg
+            viewBox="0 0 200 240"
+            className="h-64 w-64 drop-shadow-[0_0_30px_rgba(245,166,35,0.4)]"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Brass Base */}
+            <rect x="82" y="16" width="36" height="28" rx="3" fill="#c4841a" stroke="#f5a623" strokeWidth="1.5" />
+            <line x1="82" y1="24" x2="118" y2="24" stroke="#e8dac7" strokeWidth="1" strokeOpacity="0.6" />
+            <line x1="82" y1="32" x2="118" y2="32" stroke="#e8dac7" strokeWidth="1" strokeOpacity="0.6" />
+            {/* Outer Glass Contour */}
+            <path
+              d="M82 44 C50 70, 36 100, 36 130 C36 172, 65 204, 100 204 C135 204, 164 172, 164 130 C164 100, 150 70, 118 44 Z"
+              fill="rgba(245,166,35,0.08)"
+              stroke="#ffd580"
+              strokeWidth="1.5"
+              strokeOpacity="0.6"
+            />
+            {/* Glowing Tungsten Filament */}
+            <path
+              d="M92 44 L92 100 Q96 115 100 100 Q104 85 100 115 Q96 140 100 130 L108 44"
+              stroke="#fff5c0"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              fill="none"
+              style={{ filter: 'drop-shadow(0 0 8px #f5a623)' }}
+            />
+            <circle cx="100" cy="115" r="16" fill="#f5a623" fillOpacity="0.4" style={{ filter: 'blur(6px)' }} />
+            <circle cx="100" cy="115" r="5" fill="#fff9db" />
+          </svg>
+        </div>
+      ) : (
+        <div ref={containerRef} className="relative z-10 h-[380px] w-[380px] cursor-grab active:cursor-grabbing" />
+      )}
     </div>
   );
 }
