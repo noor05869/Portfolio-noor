@@ -12,8 +12,8 @@ export default function StreetLamp({ side }: { side: 'left' | 'right' }) {
       <svg viewBox="0 0 420 600" preserveAspectRatio="none" className="h-full w-full overflow-visible">
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="var(--bulb-color)" stopOpacity="0.25" />
-            <stop offset="70%" stopColor="var(--bulb-color)" stopOpacity="0.04" />
+            <stop offset="0%" stopColor="var(--bulb-color)" stopOpacity="0.08" />
+            <stop offset="60%" stopColor="var(--bulb-color)" stopOpacity="0.01" />
             <stop offset="100%" stopColor="var(--bulb-color)" stopOpacity="0" />
           </linearGradient>
           <radialGradient id={bloomId}>

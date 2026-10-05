@@ -67,7 +67,7 @@ export default function CustomCursor() {
 
       {/* Outer warm glowing ring follower */}
       <motion.div
-        className="pointer-events-none fixed left-0 top-0 z-[9999] flex items-center justify-center rounded-full border border-amber/50 bg-amber/[0.06] backdrop-blur-[1px]"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] flex items-center justify-center rounded-full border border-amber/50 bg-amber/[0.04]"
         animate={{
           x: mousePosition.x - (isHovered ? 32 : 18),
           y: mousePosition.y - (isHovered ? 32 : 18),

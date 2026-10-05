@@ -42,7 +42,33 @@ export const skillGroups = [
   },
 ];
 
-export const workExperience = [
+export type ProjectImage = {
+  src: string;
+  title: string;
+  tag: string;
+  description: string;
+};
+
+export type Project = {
+  name: string;
+  featured?: boolean;
+  badge?: string;
+  url?: string;
+  architecture?: string[];
+  bullets: string[];
+  stack: string[];
+  images?: ProjectImage[];
+};
+
+export type Experience = {
+  company: string;
+  role: string;
+  period: string;
+  url?: string;
+  projects: Project[];
+};
+
+export const workExperience: Experience[] = [
   {
     company: 'TechBazaar.pk',
     role: 'Frontend Engineer',
@@ -50,17 +76,20 @@ export const workExperience = [
     url: 'https://techbazaar.pk',
     projects: [
       {
-        name: 'AI Product Discovery & RAG Conversational Search',
+        name: 'AI Search & RAG Pipeline Engineer | TechVault AI',
         featured: true,
         badge: 'AI · SEARCH',
-        architecture: ['Next.js', 'NestJS', 'Qdrant', 'OpenAI', 'Redis'],
+        architecture: ['FastAPI', 'LangChain', 'Gemini', 'Qdrant', 'PostgreSQL'],
         bullets: [
-          'Designed and implemented production conversational search using Qdrant vector retrieval, OpenAI embeddings, and NestJS microservices.',
-          'Built a GPT-4o-mini intent pipeline with structured JSON output translating natural-language queries into budget, category, brand, and use-case filters.',
-          'Developed hybrid search combining Qdrant ANN retrieval with structured SQL filters and Redis-backed memory for multi-turn conversations.',
-          'Introduced Jest and React Testing Library coverage for intent extraction, search-pipeline logic, API integration, and frontend behavior.',
+          'Engineered an end-to-end AI-powered search and RAG backend using FastAPI and LangChain (LCEL), converting unstructured buyer queries into grounded product recommendations and structured JSON payloads.',
+          'Implemented zero-shot intent extraction using Google Gemini and Pydantic v2 schemas to parse natural-language search constraints (brand, price ceilings, stock status, category) prior to retrieval.',
+          'Eliminated external embedding costs and rate limits by deploying local 384-dimensional HuggingFace embeddings (BAAI/bge-small-en-v1.5) running locally on CPU.',
+          'Configured hybrid metadata-filtered vector search in Qdrant Vector DB, combining semantic cosine similarity with strict SQL-like payload filters for precise catalog matching.',
+          'Architected a resilient multi-model fallback chain (gemini-flash-lite → gemini-flash) to ensure continuous service availability during API throttling or quota exhaustion.',
+          'Built an incremental, checkpointed batch ingestion pipeline synchronizing catalog listings from PostgreSQL (SQLModel) into Qdrant, avoiding redundant re-embedding.',
+          'Containerized infrastructure with Docker Compose managing PostgreSQL, Qdrant Vector DB, and Redis caching.',
         ],
-        stack: ['NestJS', 'Qdrant', 'OpenAI API', 'Redis', 'Jest', 'RAG'],
+        stack: ['Python', 'FastAPI', 'LangChain', 'Qdrant', 'Google Gemini', 'PostgreSQL', 'Docker'],
       },
       {
         name: 'Marketplace Platform',
@@ -72,6 +101,57 @@ export const workExperience = [
           'Achieved a 92+ Google Lighthouse performance score through optimized rendering, code splitting, and careful client-side boundaries.',
         ],
         stack: ['Next.js', 'TypeScript', 'TanStack Query', 'Zustand', 'Tailwind CSS'],
+        images: [
+          {
+            src: '/workSCs/Screenshot 2026-10-02 202805.png',
+            title: 'Marketplace Storefront & Flash Offers',
+            tag: 'Catalog UI',
+            description: 'High-density responsive storefront serving 300K+ users with 40K+ active listings, flash discounts, and instant category discovery.',
+          },
+          {
+            src: '/workSCs/Screenshot 2026-10-02 202912.png',
+            title: 'Budget Deals & Price Discovery Matrix',
+            tag: 'Filters & Navigation',
+            description: 'Segmented budget filters (Under 5k to 100k+) and deal widgets engineered for rapid conversion and fast mobile browsing.',
+          },
+          {
+            src: '/workSCs/Screenshot 2026-10-02 203020.png',
+            title: 'Dynamic Product View & Multi-Pack Bundles',
+            tag: 'Checkout & Conversion',
+            description: 'Interactive gallery, multi-quantity bundle discounts, real-time stock availability, and automated bank transfer checkout.',
+          },
+        ],
+      },
+      {
+        name: 'Point of Sale (POS) & Operations System',
+        featured: true,
+        badge: 'ENTERPRISE · RS 163M+ VOLUME',
+        bullets: [
+          'Developed sales, purchasing, inventory, transaction-history, and operational reporting workflows for an enterprise web-based POS system.',
+          'Created real-time financial tracking dashboards processing over 11,000+ sales and Rs. 163M+ in transaction volume.',
+          'Built an integrated order queue system with customer verification, SMS triggers, spam protection, and automated shopkeeper dispatch.',
+        ],
+        stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'State Management', 'REST APIs'],
+        images: [
+          {
+            src: '/workSCs/pos-1.png',
+            title: 'Super-Admin Operations Command Center',
+            tag: 'Operations Portal',
+            description: 'Central operations portal managing sales dashboards, listings, shopkeeper accounts, order logistics, and platform permissions.',
+          },
+          {
+            src: '/workSCs/POS-2.png',
+            title: 'Sales & POS Revenue Analytics Engine',
+            tag: 'Financial Analytics',
+            description: 'Interactive real-time metrics tracking Rs. 163M+ in POS volume, 11K+ transactions, and monthly subscription growth curves.',
+          },
+          {
+            src: '/workSCs/POS-3.png',
+            title: 'Live Order Queue & Merchant Dispatch Flow',
+            tag: 'Fulfillment Pipeline',
+            description: 'Real-time order pipeline with customer verification, instant SMS triggers, spam filtering, and merchant delivery routing.',
+          },
+        ],
       },
       {
         name: 'AI Shopping Assistant',
@@ -83,13 +163,6 @@ export const workExperience = [
           'Designed a conversational experience that gathers budget, category, brand, and use-case requirements before returning relevant catalog results, with voice input via Web Speech API.',
         ],
         stack: ['Next.js', 'NestJS', 'OpenAI Assistants', 'Qdrant', 'Web Speech API'],
-      },
-      {
-        name: 'Point of Sale (POS) System',
-        bullets: [
-          'Developed sales, purchasing, inventory, transaction-history, and operational reporting workflows for a web-based POS system.',
-        ],
-        stack: ['React.js', 'TypeScript', 'State Management'],
       },
     ],
   },
@@ -109,16 +182,51 @@ export const workExperience = [
           'Implemented defensive order handling with expected-total and catalogue-revision checks so the server remains authoritative during checkout.',
         ],
         stack: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Zod', 'Resend', 'Vitest'],
+        images: [
+          {
+            src: '/workSCs/Pixel-1.png',
+            title: 'Pixels Galaxy Brand Storefront',
+            tag: 'D2C Storefront',
+            description: 'High-energy dark-mode commerce storefront built with Next.js, custom colorway showcases, and frictionless cash-on-delivery ordering.',
+          },
+          {
+            src: '/workSCs/pixel-2.png',
+            title: 'Interactive Multi-Color Configurator & Bundles',
+            tag: 'Product Customizer',
+            description: 'Dynamic dual-color selector, real-time stock counters, server-authoritative pricing validation, and bundle discounts.',
+          },
+        ],
       },
       {
-        name: 'Gatekeeper (HEPTA)',
-        badge: 'CROSS-PLATFORM',
+        name: 'Gatekeeper (HEPTA Presence)',
+        featured: true,
+        badge: 'CROSS-PLATFORM · WEB & MOBILE',
         bullets: [
           'Role-aware attendance and safety foundation for schools & organizations designed across mobile and web experiences.',
           'Built welcome, sign-in, password recovery, role previews, protected kiosk-demo boundaries, mock repositories, and secure session-token storage.',
           'Implemented mobile foundation with Expo Router and React Native while web app uses protected routes and clear authentication boundaries.',
         ],
         stack: ['Next.js', 'React Native', 'Expo Router', 'TypeScript', 'TanStack Query', 'Zustand', 'Radix UI'],
+        images: [
+          {
+            src: '/workSCs/hepta-1.png',
+            title: 'Role-Aware Portal Authentication',
+            tag: 'Auth & Security',
+            description: 'Clean split-screen authentication with organization access controls, password recovery, and pre-configured role-preview demos.',
+          },
+          {
+            src: '/workSCs/hepta-2.png',
+            title: 'Campus Attendance & Live Headcount',
+            tag: 'Roster Telemetry',
+            description: 'Real-time telemetry showing live on-site student & staff counts, late arrivals, missing rosters, and campus setup workflows.',
+          },
+          {
+            src: '/workSCs/hepta-3.png',
+            title: 'Interactive Geofencing & Tablet Kiosk Setup',
+            tag: 'Geospatial Boundary',
+            description: 'Interactive map-based geofence radius adjustment, campus boundary definition, and physical tablet kiosk activation.',
+          },
+        ],
       },
       {
         name: 'Progress Tracker',
