@@ -35,14 +35,14 @@ function Stat({ value, suffix, label }: (typeof stats)[number]) {
       className="warm-card p-5 border border-amber/25 bg-[#161410] shadow-lg transition-colors hover:border-amber"
     >
       <div className="font-display text-4xl font-bold text-amber">{display}{suffix}</div>
-      <p className="mt-2 text-xs font-mono font-medium leading-5 text-[#c8b9a6] uppercase tracking-wider">{label}</p>
+      <p className="mt-2 text-xs font-mono font-semibold leading-5 text-slate-300 uppercase tracking-wider">{label}</p>
     </motion.div>
   );
 }
 
 export default function About() {
   return (
-    <section id="about" className="section-space relative border-t border-amber/15">
+    <section id="about" className="section-space relative border-t border-white/10">
       <div className="page-shell">
         <Reveal>
           <div className="mb-10">
@@ -56,10 +56,10 @@ export default function About() {
             <p className="font-display text-2xl font-bold leading-snug text-white sm:text-3xl">
               I build frontend systems that are fast, tested, and built to last.
             </p>
-            <p className="text-base leading-8 text-[#e0d3c1]">
-              Senior Frontend Engineer with backend & AI experience. Currently at <strong className="text-amber">TechBazaar.pk</strong>, where I shipped a production RAG-based conversational search system, an AI shopping assistant, and a marketplace serving 300K+ users.
+            <p className="text-base leading-8 text-slate-200">
+              Senior Frontend Engineer with backend & AI experience. Currently at <strong className="text-amber font-semibold">TechBazaar.pk</strong>, where I shipped a production RAG-based conversational search system, an AI shopping assistant, and a marketplace serving 300K+ users.
             </p>
-            <p className="text-base leading-8 text-[#e0d3c1]">
+            <p className="text-base leading-8 text-slate-200">
               Expanded into AI agents, LLM tool calling, and MCP servers—bringing careful interface work all the way through to the system behind it.
             </p>
 

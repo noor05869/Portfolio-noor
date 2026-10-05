@@ -3,26 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #0c0b0a;
-  --bg-primary-rgb: 12 11 10;
-  --bg-surface: #181612;
-  --bg-surface-rgb: 24 22 18;
-  --bg-surface-hover: #221e18;
-  --bg-surface-hover-rgb: 34 30 24;
-  --accent: #f5a623;
-  --accent-rgb: 245 166 35;
-  --accent-dim: #c4841a;
-  --accent-dim-rgb: 196 132 26;
-  --text-primary: #f8f3ea;
-  --text-primary-rgb: 248 243 234;
-  --text-secondary: #d4c5b0;
-  --text-secondary-rgb: 212 197 176;
-  --text-muted: #9e8e7a;
-  --text-muted-rgb: 158 142 122;
-  --border: rgba(245, 166, 35, 0.2);
-  --glow: rgba(245, 166, 35, 0.12);
-  --beam-color: rgba(255, 200, 80, 0.15);
-  --bulb-color: #ffd580;
+  --bg-primary: #0a0b0e;
+  --bg-primary-rgb: 10 11 14;
+  --bg-surface: #13161f;
+  --bg-surface-rgb: 19 22 31;
+  --bg-surface-hover: #1a1f2c;
+  --bg-surface-hover-rgb: 26 31 44;
+  --accent: #f59e0b;
+  --accent-rgb: 245 158 11;
+  --accent-dim: #d97706;
+  --accent-dim-rgb: 217 119 6;
+  --text-primary: #f9fafb;
+  --text-primary-rgb: 249 250 251;
+  --text-secondary: #d1d5db;
+  --text-secondary-rgb: 209 213 219;
+  --text-muted: #9ca3af;
+  --text-muted-rgb: 156 163 175;
+  --border: rgba(255, 255, 255, 0.08);
+  --glow: rgba(245, 158, 11, 0.08);
+  --beam-color: rgba(245, 158, 11, 0.06);
+  --bulb-color: #fcd34d;
   --intensity: 0.78;
 }
 
@@ -42,7 +42,7 @@ body {
   color: var(--text-primary);
   font-family: var(--font-inter), sans-serif;
   text-rendering: optimizeLegibility;
-  transition: background-color 600ms ease, color 400ms ease;
+  transition: background-color 400ms ease, color 300ms ease;
 }
 
 a, button { -webkit-tap-highlight-color: transparent; }
@@ -58,9 +58,9 @@ button, a { outline-offset: 4px; }
   .section-space { @apply py-20 sm:py-28 lg:py-32; }
   .section-label { @apply mb-6 flex items-center gap-4 font-body text-xs font-semibold uppercase tracking-[0.24em] text-amber; }
   .section-label::after { content: ''; @apply h-px w-16 bg-amber/40; }
-  .warm-card { @apply rounded-2xl border border-amber/20 bg-[#161410] backdrop-blur-md; box-shadow: 0 10px 40px rgba(0,0,0,0.45); transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease; }
-  .tag { @apply inline-flex rounded-full border border-amber/30 bg-amber/[0.09] px-3.5 py-1.5 font-mono text-xs text-[#e8dac7] font-medium transition duration-200 hover:border-amber hover:bg-amber/20 hover:text-amber; }
-  .amber-button { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-amber bg-amber/10 px-6 py-2.5 font-body text-sm font-semibold text-amber transition duration-200 hover:bg-amber hover:text-black hover:shadow-[0_0_25px_rgba(245,166,35,0.3)]; }
+  .warm-card { @apply rounded-2xl border border-white/10 bg-[#12151c]/90 backdrop-blur-md; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.07), 0 16px 40px -8px rgba(0,0,0,0.6); transition: background-color 250ms ease, border-color 250ms ease, box-shadow 250ms ease; }
+  .tag { @apply inline-flex rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 font-mono text-xs text-slate-200 font-medium transition duration-200 hover:border-amber/60 hover:bg-amber/15 hover:text-amber; }
+  .amber-button { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-amber/70 bg-amber/10 px-6 py-2.5 font-body text-sm font-semibold text-amber transition duration-200 hover:bg-amber hover:text-black hover:shadow-[0_0_20px_rgba(245,158,11,0.25)]; }
 }
 
 .contact-grid {

@@ -1,36 +1,13 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
-import Lenis from 'lenis';
+import { ReactNode } from 'react';
 
 interface SmoothScrollProps {
   children: ReactNode;
 }
 
+// Native hardware-accelerated scrolling runs on the browser compositor at native 120Hz/144Hz
+// without JavaScript wheel-interception lag
 export default function SmoothScroll({ children }: SmoothScrollProps) {
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    const rafId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-    };
-  }, []);
-
   return <>{children}</>;
 }

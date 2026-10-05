@@ -17,7 +17,7 @@ import SmoothScroll from './SmoothScroll';
 import ThreeBackground from './ThreeBackground';
 
 export default function PortfolioApp() {
-  const [lightsOn, setLightsOn] = useState(false);
+  const [lightsOn, setLightsOn] = useState(true);
   const reduceMotion = useReducedMotion();
 
   return (

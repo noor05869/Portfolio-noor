@@ -15,7 +15,7 @@ const iconsMap: Record<string, any> = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="section-space relative border-t border-amber/15">
+    <section id="skills" className="section-space relative border-t border-white/10">
       <div className="page-shell">
         <Reveal>
           <div className="mb-12">
@@ -40,8 +40,8 @@ export default function Skills() {
                 delay={index * 0.08}
                 className={`group relative overflow-hidden rounded-2xl border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:border-amber/50 hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] ${
                   isWide
-                    ? 'md:col-span-2 lg:col-span-2 border-amber/35 bg-[#1a1712]'
-                    : 'border-amber/20 bg-[#161410]'
+                    ? 'md:col-span-2 lg:col-span-2 border-white/15 bg-[#141824]'
+                    : 'border-white/10 bg-[#10131a]'
                 }`}
               >
                 {/* Subtle ambient light mesh */}
@@ -67,7 +67,7 @@ export default function Skills() {
                       {group.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="tag font-semibold text-white bg-amber/10 border-amber/30 hover:border-amber hover:bg-amber hover:text-black"
+                          className="tag font-semibold text-slate-200 bg-white/5 border-white/10 hover:border-amber hover:bg-amber/20 hover:text-amber"
                           data-cursor="STACK"
                         >
                           {skill}
@@ -76,7 +76,7 @@ export default function Skills() {
                     </div>
                   </div>
 
-                  <div className="mt-8 pt-4 border-t border-amber/20 flex items-center justify-between font-mono text-xs text-[#b8a894]">
+                  <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs text-slate-400">
                     <span>{group.skills.length} core technologies</span>
                     <span className="text-amber font-semibold">Production Tested</span>
                   </div>
