@@ -51,6 +51,8 @@ export type ProjectImage = {
 
 export type Project = {
   name: string;
+  summary?: string;
+  impact?: { value: string; label: string }[];
   featured?: boolean;
   badge?: string;
   url?: string;
@@ -93,6 +95,9 @@ export const workExperience: Experience[] = [
       },
       {
         name: 'Marketplace Platform',
+        summary: 'A fast, responsive marketplace that takes shoppers from product discovery to checkout.',
+        url: 'https://techbazaar.pk',
+        impact: [{ value: '300K+', label: 'active users' }, { value: '40K+', label: 'live listings' }, { value: '92+', label: 'Lighthouse score' }],
         featured: true,
         badge: 'SCALE · 300K+ USERS',
         bullets: [
@@ -124,6 +129,8 @@ export const workExperience: Experience[] = [
       },
       {
         name: 'Point of Sale (POS) & Operations System',
+        summary: 'An operations workspace for sales, inventory, reporting, and merchant order fulfillment.',
+        impact: [{ value: 'Rs. 163M+', label: 'transaction volume' }, { value: '11K+', label: 'sales processed' }],
         featured: true,
         badge: 'ENTERPRISE · RS 163M+ VOLUME',
         bullets: [
@@ -173,6 +180,7 @@ export const workExperience: Experience[] = [
     projects: [
       {
         name: 'Pixels Galaxy',
+        summary: 'A direct-to-consumer storefront with interactive product options and a reliable cash-on-delivery checkout.',
         featured: true,
         badge: 'COMMERCE · LIVE',
         url: 'https://pixelsgalaxy.com',
@@ -199,6 +207,7 @@ export const workExperience: Experience[] = [
       },
       {
         name: 'Gatekeeper (HEPTA Presence)',
+        summary: 'A role-aware attendance and safety app with clear school dashboards, campus setup, and secure sign-in.',
         featured: true,
         badge: 'CROSS-PLATFORM · WEB & MOBILE',
         bullets: [

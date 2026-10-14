@@ -74,6 +74,25 @@ button, a { outline-offset: 4px; }
 }
 
 .mood-range { accent-color: var(--accent); }
+
+.gallery-control {
+  @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/10 text-sand transition-colors hover:border-amber/40 hover:bg-amber/10 hover:text-amber disabled:cursor-default disabled:opacity-30;
+}
+.project-details summary::-webkit-details-marker { display: none; }
+.project-details[open] .details-chevron { transform: rotate(180deg); }
+.project-viewer {
+  width: min(1440px, calc(100vw - 32px));
+  max-width: none;
+  max-height: 94dvh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  margin: auto;
+}
+.project-viewer::backdrop { background: rgb(0 0 0 / 0.88); }
+
+
 .mood-range::-webkit-slider-runnable-track {
   height: 4px;
   border-radius: 999px;

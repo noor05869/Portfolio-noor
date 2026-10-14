@@ -72,3 +72,14 @@ The base specification, hero redesign patch, and CV asset routing are complete. 
 
 - Copied `lib/NoorUllah_CV (3).pdf` to `public/noor-ullah-cv.pdf`.
 - Existing desktop and mobile navbar CV links use `personalInfo.cv`, which already points to `/noor-ullah-cv.pdf`.
+
+## Project showcase redesign — 2026-10-14
+
+- Replaced nested company/project cards with four screenshot-first app showcases and a compact supporting engineering section.
+- Added concise summaries and existing impact metrics; surfaced TechBazaar and Pixels Galaxy live app links.
+- Preserved all project descriptions, technology stacks, architecture, and employment context behind native details disclosures.
+- Added full-screen screenshot viewing, 200% zoom, swipe navigation, keyboard arrows, Escape dismissal, focus restoration, and scroll locking.
+- Screenshots retain their complete aspect ratio and load lazily.
+- Validation: production build (including lint/type validation) passed; standalone typecheck and changed-file lint passed; desktop and 390px mobile browser checks passed with no horizontal overflow or captured console errors/warnings.
+- Build requires execution outside the filesystem sandbox because Node promises.realpath returns EPERM for installed dependency files inside it.
+- Preview: http://localhost:3100/#work
