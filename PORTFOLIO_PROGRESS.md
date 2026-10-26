@@ -83,3 +83,52 @@ The base specification, hero redesign patch, and CV asset routing are complete. 
 - Validation: production build (including lint/type validation) passed; standalone typecheck and changed-file lint passed; desktop and 390px mobile browser checks passed with no horizontal overflow or captured console errors/warnings.
 - Build requires execution outside the filesystem sandbox because Node promises.realpath returns EPERM for installed dependency files inside it.
 - Preview: http://localhost:3100/#work
+
+
+## Complete Portfolio Revamp & "AI Slop" Removal — 2026-10-23
+
+- **Research & Framework Guidance**: Applied principles from `uupm.cc` (UI/UX Pro Max), `impeccable.style` (Paul Bakaus), and `tasteskill.dev` (Leon Lin), alongside Emil Kowalski's tactile design engineering standards.
+- **AI Slop Purged**:
+  - Removed `DarkState.tsx` (pull-cord curtain blocking entrance).
+  - Removed `HeroBulb3D.tsx` (heavy Three.js WebGL bulb canvas).
+  - Removed `StreetLamp.tsx` (dual Victorian street lamps with artificial beam cones).
+  - Removed `LightMoodSwitcher.tsx` (mood switcher / slider widget).
+  - Removed `CustomCursor.tsx` (mouse cursor hijack with trailing text badge).
+  - Removed `CursorSpotlight.tsx` and `GrainOverlay.tsx` (default AI radial spotlight and noise texture).
+  - Removed `ThreeBackground.tsx` (random floating WebGL particle field).
+  - Removed `InteractiveTerminal.tsx` (fake bash terminal widget).
+  - Removed `AudioToggle.tsx` and `lib/sound.ts` (Web Audio API hover beeps and relay clicks).
+  - Uninstalled bloat dependencies: `three`, `@types/three`, `gsap`, `@gsap/react`, `lenis`.
+- **New Obsidian-Precision Design & Architecture**:
+  - **Navbar**: Streamlined sticky header with `NU` monogram, live status indicator (`● Available for remote roles`), smooth jump links, and direct CV download.
+  - **Hero**: Authoritative editorial headline highlighting high-scale commerce and production AI systems.
+  - **Interactive Architecture & Systems Hub**: Replaced the 3D bulb with an interactive engineering inspector featuring Noor's real systems:
+    - TechVault AI Search (FastAPI -> Gemini Intent Extraction -> Local HuggingFace Embeddings -> Qdrant Vector Retrieval).
+    - TechBazaar.pk 92+ Lighthouse Performance & Core Web Vitals telemetry.
+    - Enterprise POS Operations Engine (11,000+ sales processed).
+  - **Telemetry Bar**: Tabular telemetry cards for 4+ Years, 300K+ Users, 40K+ Listings, and 92+ Lighthouse score.
+  - **Work & Screenshot Walkthrough**: Crisp production showcase with full-screen zoom, keyboard navigation, and architecture chains.
+  - **Engineering Systems Toolkit**: Replaced generic bento tags with an architectural matrix categorized by system responsibility.
+  - **About**: Engineering principles manifesto ("Performance as an Architectural Constraint", "Defensive Boundaries") and career trajectory.
+  - **Contact**: Clean 1-click clipboard copy with visual confirmation, direct mailto, LinkedIn, and GitHub links.
+- **Validation**:
+  - `npm run typecheck` — passed with 0 errors.
+  - `npm run lint` — passed with 0 warnings.
+  - `next build` — passed and statically prerendered all routes (First Load JS: 148 kB).
+
+
+## 3D Interactive Portrait Integration — 2026-10-27
+
+- **Photo Asset**: Imported and optimized Noor's authentic portrait into [`public/noor-ullah.png`](file:///d:/Portfolio-noor/public/noor-ullah.png).
+- **New Component ([`ProfileCard3D.tsx`](file:///d:/Portfolio-noor/components/ProfileCard3D.tsx))**:
+  - Implemented 60fps/120fps spring physics with Framer Motion (`rotateX`, `rotateY`, `perspective: 1200px`).
+  - Added dynamic specular glare overlay that follows the cursor across the card.
+  - Multi-layer spatial parallax: floating badges (`● Open for roles`, `NU // 4+ YOE`, `Pakistan (Remote)`) rendered at `translateZ(30px)` and `translateZ(38px)`.
+  - Ambient responsive glow and Emil Kowalski tactile depth styling.
+- **Hero Integration ([`Hero.tsx`](file:///d:/Portfolio-noor/components/Hero.tsx))**:
+  - Placed the 3D card alongside the editorial introduction in an asymmetric grid on desktop.
+  - Stacks naturally and compactly on mobile/tablet viewports.
+- **Validation**:
+  - `npm run typecheck` — passed with 0 errors.
+  - `npm run lint` — passed with 0 warnings.
+  - Next.js dev server live at `http://localhost:3001` (HTTP 200 OK).

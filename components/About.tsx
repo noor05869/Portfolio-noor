@@ -1,80 +1,147 @@
 'use client';
 
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { stats } from '@/lib/data';
+import { Briefcase, CheckCircle2, Code2, Compass, Cpu, Sparkles } from 'lucide-react';
 import Reveal from './Reveal';
-import TextReveal from './TextReveal';
-import InteractiveTerminal from './InteractiveTerminal';
 
-function Stat({ value, suffix, label }: (typeof stats)[number]) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-  const reduceMotion = useReducedMotion();
-  const [display, setDisplay] = useState(reduceMotion ? value : 0);
+const principles = [
+  {
+    title: 'Performance as an Architectural Constraint',
+    description: 'A slow interface is a broken interface. I design client boundaries, data pre-fetching, and image pipelines to maintain sub-second LCP and 90+ Lighthouse scores under real-world network constraints.',
+  },
+  {
+    title: 'Defensive Data & Authoritative Boundaries',
+    description: 'Client state is ephemeral and untrusted. I enforce strict schema validations (Zod on web, Pydantic on Python) with server-authoritative pricing and checkout checks to guarantee financial and data integrity.',
+  },
+  {
+    title: 'Full-Stack Craft from Interface to Vector DB',
+    description: 'True frontend craftsmanship requires understanding the entire system behind the pixel—from micro-interaction springs and layout shifts down to Qdrant vector retrieval, Redis caching, and database schemas.',
+  },
+];
 
-  useEffect(() => {
-    if (!inView) return;
-    if (reduceMotion) { setDisplay(value); return; }
-    const duration = 1100;
-    const start = performance.now();
-    let frame = 0;
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      setDisplay(Math.round(value * (1 - Math.pow(1 - progress, 3))));
-      if (progress < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [inView, reduceMotion, value]);
-
-  return (
-    <motion.div
-      ref={ref}
-      whileHover={{ y: -3 }}
-      className="warm-card p-5 border border-amber/25 bg-[#161410] shadow-lg transition-colors hover:border-amber"
-    >
-      <div className="font-display text-4xl font-bold text-amber">{display}{suffix}</div>
-      <p className="mt-2 text-xs font-mono font-semibold leading-5 text-slate-300 uppercase tracking-wider">{label}</p>
-    </motion.div>
-  );
-}
+const timeline = [
+  {
+    role: 'Frontend & AI Systems Engineer',
+    company: 'TechBazaar.pk',
+    period: 'Sep 2022 – Present',
+    badge: 'Current / Scaling',
+    achievements: [
+      'Architected frontend powering 300K+ monthly active shoppers and 40K+ live inventory listings with 92+ Lighthouse score.',
+      'Shipped TechVault AI: zero-cost local embedding RAG pipeline using FastAPI, LangChain, Gemini, and Qdrant.',
+      'Developed enterprise web POS system processing over 11,000+ sales and multi-branch inventory operations.',
+    ],
+  },
+  {
+    role: 'Creator & Lead Engineer',
+    company: 'Pixels Galaxy & HEPTA Gatekeeper',
+    period: '2023 – 2024',
+    badge: 'Production Systems',
+    achievements: [
+      'Built Pixels Galaxy D2C storefront with dynamic colorway configurators and authoritative cash-on-delivery validation.',
+      'Engineered cross-platform mobile & web attendance foundation for educational campuses using Expo Router and Next.js.',
+    ],
+  },
+  {
+    role: 'Frontend Developer',
+    company: 'U2Ventures Pvt Ltd',
+    period: 'Jan 2022 – Sep 2022',
+    badge: 'Foundations',
+    achievements: [
+      'Built core corporate web applications and established reusable React design systems.',
+      'Engineered dashboard workflows and investor onboarding interfaces for Finqalab and E-Agrimarket.',
+    ],
+  },
+];
 
 export default function About() {
   return (
     <section id="about" className="section-space relative border-t border-white/10">
       <div className="page-shell">
         <Reveal>
-          <div className="mb-10">
-            <span className="section-label">About</span>
-            <TextReveal text="Engineering Mindset & Background" as="h2" className="font-display text-3xl font-bold uppercase tracking-tight text-white sm:text-4xl" />
+          <div className="mb-12 max-w-2xl">
+            <span className="section-label">Engineering Background</span>
+            <h2 className="font-display text-3xl font-bold tracking-tight text-cream sm:text-4xl">
+              Engineering mindset & track record.
+            </h2>
+            <p className="mt-3 text-sm sm:text-base leading-relaxed text-sand">
+              Over 4 years of dedicated engineering experience building mission-critical user interfaces and full-stack systems that serve real users at scale.
+            </p>
           </div>
         </Reveal>
-        
-        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
-          <Reveal className="space-y-6">
-            <p className="font-display text-2xl font-bold leading-snug text-white sm:text-3xl">
-              I build frontend systems that are fast, tested, and built to last.
-            </p>
-            <p className="text-base leading-8 text-slate-200">
-              Senior Frontend Engineer with backend & AI experience. Currently at <strong className="text-amber font-semibold">TechBazaar.pk</strong>, where I shipped a production RAG-based conversational search system, an AI shopping assistant, and a marketplace serving 300K+ users.
-            </p>
-            <p className="text-base leading-8 text-slate-200">
-              Expanded into AI agents, LLM tool calling, and MCP servers—bringing careful interface work all the way through to the system behind it.
-            </p>
 
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-4">
-              {stats.map((stat) => <Stat key={stat.label} {...stat} />)}
+        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-14">
+          {/* Left: Engineering Principles */}
+          <div className="space-y-6">
+            <Reveal>
+              <h3 className="font-display text-xl font-bold text-cream flex items-center gap-2">
+                <Compass size={20} className="text-amber" />
+                <span>How I Build Software</span>
+              </h3>
+            </Reveal>
+
+            <div className="space-y-4">
+              {principles.map((p, idx) => (
+                <Reveal key={p.title} delay={idx * 0.08}>
+                  <div className="rounded-xl border border-white/10 bg-surface/70 p-5 shadow-card transition-colors hover:border-amber/30">
+                    <div className="flex items-center gap-2.5 font-display text-sm font-bold text-cream">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber/15 text-[11px] font-mono text-amber">
+                        {idx + 1}
+                      </span>
+                      <h4>{p.title}</h4>
+                    </div>
+                    <p className="mt-2 text-xs sm:text-sm leading-relaxed text-sand/90">
+                      {p.description}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.12}>
-            <InteractiveTerminal />
-          </Reveal>
+          {/* Right: Career Trajectory Timeline */}
+          <div className="space-y-6">
+            <Reveal>
+              <h3 className="font-display text-xl font-bold text-cream flex items-center gap-2">
+                <Briefcase size={20} className="text-amber" />
+                <span>Career Experience</span>
+              </h3>
+            </Reveal>
+
+            <div className="relative border-l border-white/10 pl-6 ml-2 space-y-8">
+              {timeline.map((item, idx) => (
+                <Reveal key={item.company} delay={idx * 0.08}>
+                  <div className="relative">
+                    {/* Node Dot */}
+                    <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-amber/50 bg-canvas">
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+                    </span>
+
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <h4 className="font-display text-base font-bold text-cream">
+                        {item.role}
+                      </h4>
+                      <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 font-mono text-[10px] text-amber">
+                        {item.badge}
+                      </span>
+                    </div>
+
+                    <p className="mt-1 font-mono text-xs text-muted">
+                      <span className="text-sand font-medium">{item.company}</span> · {item.period}
+                    </p>
+
+                    <ul className="mt-3 space-y-2 text-xs sm:text-sm leading-relaxed text-sand/90">
+                      {item.achievements.map((ach) => (
+                        <li key={ach} className="relative pl-4 before:absolute before:left-0 before:top-2 before:h-1 before:w-1 before:rounded-full before:bg-amber">
+                          {ach}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
-

@@ -8,53 +8,45 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: 'rgb(var(--bg-primary-rgb) / <alpha-value>)',
-        surface: 'rgb(var(--bg-surface-rgb) / <alpha-value>)',
-        'surface-hover': 'rgb(var(--bg-surface-hover-rgb) / <alpha-value>)',
-        amber: {
-          DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
-          dim: 'rgb(var(--accent-dim-rgb) / <alpha-value>)',
+        canvas: {
+          DEFAULT: '#08090c',
+          subtle: '#0c0e14',
         },
-        cream: 'rgb(var(--text-primary-rgb) / <alpha-value>)',
-        sand: 'rgb(var(--text-secondary-rgb) / <alpha-value>)',
-        muted: 'rgb(var(--text-muted-rgb) / <alpha-value>)',
+        surface: {
+          DEFAULT: '#11141d',
+          elevated: '#161a26',
+          hover: '#1c2232',
+        },
+        border: {
+          subtle: 'rgba(255, 255, 255, 0.07)',
+          medium: 'rgba(255, 255, 255, 0.12)',
+          strong: 'rgba(255, 255, 255, 0.20)',
+        },
+        amber: {
+          DEFAULT: '#f59e0b',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          dim: 'rgba(245, 158, 11, 0.12)',
+        },
+        emerald: {
+          DEFAULT: '#10b981',
+          400: '#34d399',
+          500: '#10b981',
+        },
+        cream: '#f9fafb',
+        sand: '#d1d5db',
+        muted: '#9ca3af',
       },
       fontFamily: {
         display: ['var(--font-space-grotesk)', 'sans-serif'],
         body: ['var(--font-inter)', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       },
       boxShadow: {
-        amber: '0 0 40px rgb(var(--accent-rgb) / calc(var(--intensity) * 0.10))',
-        'amber-strong': '0 0 32px rgb(var(--accent-rgb) / calc(var(--intensity) * 0.18))',
-      },
-      animation: {
-        sway: 'sway 4s ease-in-out infinite',
-        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
-        'hint-pulse': 'hintPulse 2.5s ease-in-out infinite',
-        flicker: 'flicker 0.45s steps(1) forwards',
-      },
-      keyframes: {
-        sway: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
-        },
-        pulseGlow: {
-          '0%, 100%': { opacity: '0.1' },
-          '50%': { opacity: '0.22' },
-        },
-        hintPulse: {
-          '0%, 100%': { opacity: '0.08' },
-          '50%': { opacity: '0.16' },
-        },
-        flicker: {
-          '0%': { opacity: '1' },
-          '18%': { opacity: '0' },
-          '34%': { opacity: '0.8' },
-          '48%': { opacity: '0' },
-          '64%': { opacity: '0.5' },
-          '78%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
+        card: '0 12px 36px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+        'card-hover': '0 20px 48px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.14)',
+        highlight: 'inset 0 1px 0 rgba(255, 255, 255, 0.08)',
       },
     },
   },

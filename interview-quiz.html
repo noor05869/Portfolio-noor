@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Front-End Technical Interview Quiz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen antialiased p-4 md:p-8 font-sans">
+  <div class="max-w-3xl mx-auto">
+    
+    <!-- Header -->
+    <header class="mb-8 border-b border-slate-800 pb-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+            Interview Prep & Evaluation
+          </span>
+          <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Front-End Technical Interview Quiz</h1>
+          <p class="text-slate-400 text-sm mt-1">Next.js 16 · React 19 · REST APIs · AI Latency UX · Billing · Expo</p>
+        </div>
+        <div class="text-right">
+          <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Live Score</div>
+          <div id="scoreDisplay" class="text-2xl font-black text-emerald-400">0 / 10</div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="mt-6">
+        <div class="flex justify-between text-xs text-slate-400 mb-1.5 font-medium">
+          <span id="questionCounter">Question 1 of 10</span>
+          <span id="progressPercent">10% Completed</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700/50">
+          <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full w-[10%] transition-all duration-300 ease-out"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Quiz Container Card -->
+    <main id="quizCard" class="bg-slate-800/80 backdrop-blur border border-slate-700/80 rounded-2xl p-6 md:p-8 shadow-xl mb-6 fade-in">
+      
+      <!-- Module Tag -->
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <span id="moduleTag" class="text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider bg-slate-700 text-indigo-300">
+          Module
+        </span>
+        <span id="topicTag" class="text-xs text-slate-400">Topic</span>
+      </div>
+
+      <!-- Question Text -->
+      <h2 id="questionText" class="text-lg md:text-xl font-semibold text-white leading-relaxed mb-6">
+        Loading question...
+      </h2>
+
+      <!-- Options Container -->
+      <div id="optionsContainer" class="space-y-3 mb-6">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Action Button -->
+      <div class="flex items-center justify-between pt-4 border-t border-slate-700/60">
+        <div id="feedbackStatus" class="text-sm font-semibold"></div>
+        <button id="actionBtn" onclick="handleAction()" class="px-5 py-2.5 rounded-xl font-semibold text-sm bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white transition-all shadow-lg shadow-indigo-600/20 disabled:opacity-50 disabled:pointer-events-none">
+          Submit Answer
+        </button>
+      </div>
+
+      <!-- Explanation Box -->
+      <div id="explanationBox" class="hidden mt-6 p-4 md:p-5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-sm leading-relaxed fade-in">
+        <div class="font-bold text-white flex items-center gap-2 mb-1.5">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Senior Engineering Analysis:
+        </div>
+        <div id="explanationText" class="text-slate-300"></div>
+        <div class="mt-3 pt-3 border-t border-slate-800 text-xs text-indigo-300 font-medium" id="interviewTip"></div>
+      </div>
+    </main>
+
+    <!-- Results Card (Hidden Initially) -->
+    <div id="resultsCard" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center shadow-xl fade-in">
+      <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <h2 class="text-2xl font-bold text-white mb-2">Quiz Completed!</h2>
+      <p id="finalFeedback" class="text-slate-300 text-sm mb-6 max-w-md mx-auto"></p>
+      
+      <div class="inline-block px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 text-3xl font-black text-emerald-400 mb-8" id="finalScore">
+        0 / 10
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-3">
+        <button onclick="restartQuiz()" class="px-5 py-2.5 rounded-xl font-semibold text-sm bg-indigo-600 hover:bg-indigo-500 text-white transition-all shadow-lg shadow-indigo-600/20">
+          Retake Quiz
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Footer -->
+    <footer class="mt-8 text-center text-xs text-slate-500">
+      Engineered for Noor Ullah · Next.js 16 & React 19 Frontend Interview Prep
+    </footer>
+
+  </div>
+
+  <script>
+    const questions = [
+      {
+        module: "Next.js 16 & React 19",
+        topic: "Server/Client Component Boundaries",
+        question: "You have a high-performance analytics component that queries the database directly and parses data with heavy server libraries. You need to nest it inside an interactive, collapsible <Accordion> component that manages toggle state. What is the correct architectural pattern?",
+        options: [
+          { text: "Mark both <Accordion> and the analytics widget with 'use client' so state flows seamlessly between them.", correct: false },
+          { text: "Keep the analytics widget as a Server Component and import it directly inside Accordion.tsx.", correct: false },
+          { text: "Mark <Accordion> with 'use client', keep the widget as a Server Component (RSC), and pass it into <Accordion> as 'children' from a parent Server Component.", correct: true },
+          { text: "Server Components cannot ever be rendered inside interactive client elements under React 19 rules.", correct: false }
+        ],
+        explanation: "In Next.js App Router, Client Components cannot directly import Server Components because that would force the Server Component to execute on the client. The correct composition pattern is 'slots' or 'children': the parent Server Component renders the RSC on the server and passes its serialized result as the `children` prop into the Client Component.",
+        tip: "💡 Interview Tip: Mention 'Composition over direct imports' and explain that passing children preserves zero-bundle-size server execution."
+      },
+      {
+        module: "React 19 Primitives",
+        topic: "Form Actions & Pending State",
+        question: "In React 19, which hook is specifically introduced to handle state returned from an asynchronous Server Action while automatically exposing an `isPending` transition flag?",
+        options: [
+          { text: "useOptimistic", correct: false },
+          { text: "useActionState (formerly useFormState)", correct: true },
+          { text: "useTransition", correct: false },
+          { text: "useDeferredValue", correct: false }
+        ],
+        explanation: "React 19 formalized `useActionState` (replacing `useFormState` from earlier experimental releases). It accepts an action function and initial state, and returns `[state, formAction, isPending]`. `useOptimistic` is for speculative optimistic UI updates.",
+        tip: "💡 Interview Tip: Explicitly mention that you use `useActionState` for form validation errors and server feedback, pairing it with `useOptimistic` for instantaneous UI reactions."
+      },
+      {
+        module: "REST APIs & Networking",
+        topic: "Multipart FormData Uploads",
+        question: "When sending a user profile update containing both text fields and a binary image file via fetch using `new FormData()`, what must you do regarding the `Content-Type` header?",
+        options: [
+          { text: "Explicitly set headers: { 'Content-Type': 'multipart/form-data' } to ensure the server parses it as multipart.", correct: false },
+          { text: "Do NOT set the Content-Type header manually; let the browser automatically generate the header with the unique multipart boundary string.", correct: true },
+          { text: "Set 'Content-Type': 'application/x-www-form-urlencoded' and Base64-encode the image file.", correct: false },
+          { text: "Convert the FormData to a JSON object with JSON.stringify() before calling fetch.", correct: false }
+        ],
+        explanation: "If you manually set `Content-Type: multipart/form-data`, you omit the required `boundary` parameter (e.g. `boundary=----WebKitFormBoundary...`), which causes backend multipart parsers to fail. Leaving the header undefined allows the browser to automatically set both the MIME type and the dynamic boundary string.",
+        tip: "💡 Interview Tip: Pointing this out shows real hands-on debugging experience with REST API file uploads."
+      },
+      {
+        module: "Error Handling Architecture",
+        topic: "422 Unprocessable Entity & Server State",
+        question: "The backend returns HTTP status 422 with a structured array: `[{ field: 'email', message: 'Email taken' }, { field: 'card_cvc', message: 'Invalid CVC' }]`. How should a senior frontend engineer handle this in UI state?",
+        options: [
+          { text: "Fire a generic toast notification with all error messages joined together.", correct: false },
+          { text: "Catch the error in a global Next.js error.tsx boundary and render a full-page fallback.", correct: false },
+          { text: "Map the response directly into form state (e.g. React Hook Form's setError API) to display contextual inline errors beside each field with aria-invalid attributes.", correct: true },
+          { text: "Automatically clear the form inputs and redirect the user back to the dashboard.", correct: false }
+        ],
+        explanation: "A 422 is a client-side semantic validation failure. It should never trigger full-page error boundaries or generic toasts. Senior UX maps server-provided field errors directly into form management libraries (like `setError('email', { message })`) so assistive tech and visual users see exactly which input to correct.",
+        tip: "💡 Interview Tip: Mention integrating server-side Zod errors directly into React Hook Form via `setError`."
+      },
+      {
+        module: "AI UX & Latency",
+        topic: "Streaming & Clean Cancellation",
+        question: "When consuming an internal streaming AI endpoint (Server-Sent Events or ReadableStream), what is the industry-standard way to implement a 'Stop Generating' button that terminates both network transmission and state rendering immediately?",
+        options: [
+          { text: "Call setState(prev => prev) to lock the UI state.", correct: false },
+          { text: "Pass the signal from an AbortController into fetch({ signal }), and call controller.abort() when the cancel button is clicked.", correct: true },
+          { text: "Close the browser tab or refresh the page to disconnect the WebSocket/HTTP connection.", correct: false },
+          { text: "Send a secondary POST request to /api/stop to kill the backend thread.", correct: false }
+        ],
+        explanation: "Instantiating an `AbortController` and passing its `signal` into the `fetch()` call is the standard Web API for aborting network transfers. Calling `controller.abort()` cleanly closes the HTTP connection, breaks the stream reading loop, and prevents any further state updates or unnecessary server token consumption.",
+        tip: "💡 Interview Tip: Connect this to your work on TechVault AI and the OpenAI Assistant chat interface."
+      },
+      {
+        module: "AI Review & Edit Flows",
+        topic: "Human-in-the-Loop Interaction Design",
+        question: "You are building an AI-assisted dispute letter generation feature. To ensure the user has complete control and confidence in the generated legal output, what 3 progressive UX states should be architected?",
+        options: [
+          { text: "1. Prompt Input -> 2. Background Processing (Spinner) -> 3. Instant Automated Submission", correct: false },
+          { text: "1. Live Streaming Draft (Read-only token stream) -> 2. Review & Interactive Edit Mode (editable text/diff) -> 3. Explicit Acceptance & Authoritative Save", correct: true },
+          { text: "1. Upload File -> 2. Convert to PDF -> 3. Download to Desktop", correct: false },
+          { text: "1. Chatbot Conversation -> 2. Star Rating (1-5) -> 3. Close Session", correct: false }
+        ],
+        explanation: "AI generation requires a Human-in-the-Loop (HITL) pattern: 1) Streaming Draft (mitigates perceived latency with immediate feedback), 2) Review & Edit Mode (converts raw AI output into editable form with undo/diff options), and 3) Explicit User Acceptance (calling the authoritative mutation endpoint).",
+        tip: "💡 Interview Tip: Reference your Progress Tracker project where you built 'editable AI-labelled plan drafts with review and acceptance flows'."
+      },
+      {
+        module: "Billing & Checkout",
+        topic: "Preventing Duplicate Charges & Race Conditions",
+        question: "A user on a weak connection rapidly clicks 'Purchase 500 Credits ($49)' three times within 500ms. What dual defense should you implement to guarantee they are never billed three times?",
+        options: [
+          { text: "Set a 5-second setTimeout on the window before firing the API call.", correct: false },
+          { text: "Client-side: Immediately disable the button and set isSubmitting: true; Network/Server: Attach a unique Idempotency-Key (UUIDv4) header to the request.", correct: true },
+          { text: "Only allow credit purchases during off-peak US business hours.", correct: false },
+          { text: "Store credit balances solely in localStorage to prevent multi-tab conflicts.", correct: false }
+        ],
+        explanation: "The two-tier defense consists of: 1) Client UX gate: instantly disable the button and flip submission state (`isSubmitting: true` or a ref check) to stop accidental double-clicks; 2) Network/Server gate: generate an `Idempotency-Key` header (UUID) for the transaction. If duplicate requests hit the server, the payment engine recognizes the key and returns the initial cached response rather than creating multiple charges.",
+        tip: "💡 Interview Tip: Explain how you implemented defensive checkout in Pixels Galaxy with expected totals and revision checks."
+      },
+      {
+        module: "Checkout & Security",
+        topic: "Server-Authoritative Pricing",
+        question: "Why must a frontend application NEVER send `totalAmount: 149.99` in the checkout request payload to the payment gateway or order endpoint?",
+        options: [
+          { text: "Because JSON cannot safely serialize floating-point numbers without rounding errors.", correct: false },
+          { text: "Because client-side payloads can be tampered with via browser DevTools or proxy tools. The backend must always re-calculate totals based on authoritative database catalog prices.", correct: true },
+          { text: "Because payment gateways only accept whole integers denominated in cents.", correct: false },
+          { text: "Because Next.js Server Components automatically encrypt all client-side props.", correct: false }
+        ],
+        explanation: "Never trust the client for pricing, discounts, or tax computations. An attacker can easily edit the HTTP payload in DevTools or Burp Suite to send `totalAmount: 0.01`. The frontend should only submit product/plan IDs and quantities. The server looks up prices from the database, applies business logic, and charges the verified amount.",
+        tip: "💡 Interview Tip: Emphasize 'The server is always authoritative over price, inventory, and credit allowances'."
+      },
+      {
+        module: "React Native & Expo",
+        topic: "Secure Authentication Storage",
+        question: "When storing sensitive access/refresh tokens in a React Native (Expo) mobile application, why should you use `expo-secure-store` instead of standard `AsyncStorage`?",
+        options: [
+          { text: "AsyncStorage has a strict 50KB size quota, while expo-secure-store offers 500MB.", correct: false },
+          { text: "AsyncStorage stores data unencrypted in plain text (sandbox file/SharedPreferences). expo-secure-store encrypts data hardware-backed using iOS Keychain and Android Keystore.", correct: true },
+          { text: "AsyncStorage cannot be imported inside Expo Router components.", correct: false },
+          { text: "expo-secure-store automatically syncs tokens across the user's iCloud account.", correct: false }
+        ],
+        explanation: "`AsyncStorage` stores data in unencrypted text files on device storage, making tokens vulnerable to physical extraction, backup inspection, or rooted/jailbroken device exploits. `expo-secure-store` leverages platform-native cryptographic hardware: Keychain Services on iOS and KeyStore on Android.",
+        tip: "💡 Interview Tip: Highlight your mobile work on Gatekeeper (HEPTA) using Expo Router and Expo SecureStore."
+      },
+      {
+        module: "Backend Contracts & Standards",
+        topic: "HTTP Status Code Nuance",
+        question: "A user is authenticated with a valid JWT token, but tries to invoke a DELETE endpoint on an organization resource that belongs to another customer. Which HTTP status code must the backend return?",
+        options: [
+          { text: "401 Unauthorized", correct: false },
+          { text: "403 Forbidden", correct: true },
+          { text: "404 Not Found (or 403 Forbidden to signify insufficient authorization)", correct: false },
+          { text: "409 Conflict", correct: false }
+        ],
+        explanation: "`401 Unauthorized` means 'unauthenticated' (who are you? log in). `403 Forbidden` means 'authenticated, but you lack permission to perform this action'. (Note: In some security postures, APIs return 404 to avoid leaking resource existence, but standard RBAC contracts designate 403 as the explicit authorization failure).",
+        tip: "💡 Interview Tip: Clearly articulating the exact difference between 401 (Authentication) and 403 (Authorization) instantly establishes senior-level engineering rigor."
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let selectedOptionIndex = null;
+    let score = 0;
+    let isAnswerSubmitted = false;
+
+    function renderQuestion() {
+      const q = questions[currentQuestionIndex];
+      selectedOptionIndex = null;
+      isAnswerSubmitted = false;
+
+      // Update counters & progress
+      document.getElementById('questionCounter').innerText = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+      const pct = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
+      document.getElementById('progressPercent').innerText = `${pct}% Completed`;
+      document.getElementById('progressBar').style.width = `${pct}%`;
+
+      // Update Tags
+      document.getElementById('moduleTag').innerText = q.module;
+      document.getElementById('topicTag').innerText = q.topic;
+      document.getElementById('questionText').innerText = q.question;
+
+      // Render Options
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `w-full text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/40 hover:bg-slate-700/40 hover:border-slate-600 transition-all text-sm leading-relaxed flex items-start gap-3 text-slate-200`;
+        btn.id = `option-${idx}`;
+        btn.onclick = () => selectOption(idx);
+        
+        btn.innerHTML = `
+          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full border border-slate-600 text-xs font-bold text-slate-400 shrink-0 mt-0.5">
+            ${String.fromCharCode(65 + idx)}
+          </span>
+          <span class="flex-1">${opt.text}</span>
+        `;
+        container.appendChild(btn);
+      });
+
+      // Reset feedback and action button
+      document.getElementById('feedbackStatus').innerHTML = '';
+      document.getElementById('explanationBox').classList.add('hidden');
+      const actionBtn = document.getElementById('actionBtn');
+      actionBtn.innerText = 'Submit Answer';
+      actionBtn.disabled = true;
+      actionBtn.className = "px-5 py-2.5 rounded-xl font-semibold text-sm bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white transition-all shadow-lg shadow-indigo-600/20 disabled:opacity-50 disabled:pointer-events-none";
+    }
+
+    function selectOption(idx) {
+      if (isAnswerSubmitted) return;
+      selectedOptionIndex = idx;
+      
+      // Highlight selection
+      questions[currentQuestionIndex].options.forEach((_, i) => {
+        const el = document.getElementById(`option-${i}`);
+        if (i === idx) {
+          el.className = "w-full text-left p-4 rounded-xl border border-indigo-500 bg-indigo-500/10 text-white font-medium transition-all text-sm leading-relaxed flex items-start gap-3 shadow-sm";
+          el.querySelector('span').className = "inline-flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500 text-white text-xs font-bold shrink-0 mt-0.5";
+        } else {
+          el.className = "w-full text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/40 hover:bg-slate-700/40 hover:border-slate-600 transition-all text-sm leading-relaxed flex items-start gap-3 text-slate-200";
+          el.querySelector('span').className = "inline-flex items-center justify-center w-6 h-6 rounded-full border border-slate-600 text-xs font-bold text-slate-400 shrink-0 mt-0.5";
+        }
+      });
+
+      document.getElementById('actionBtn').disabled = false;
+    }
+
+    function handleAction() {
+      if (!isAnswerSubmitted) {
+        // Submit state
+        submitAnswer();
+      } else {
+        // Next question
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+          renderQuestion();
+        } else {
+          showResults();
+        }
+      }
+    }
+
+    function submitAnswer() {
+      isAnswerSubmitted = true;
+      const q = questions[currentQuestionIndex];
+      const isCorrect = q.options[selectedOptionIndex].correct;
+
+      if (isCorrect) {
+        score++;
+        document.getElementById('scoreDisplay').innerText = `${score} / ${questions.length}`;
+        document.getElementById('feedbackStatus').innerHTML = `<span class="text-emerald-400 flex items-center gap-1.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Correct! Excellent.</span>`;
+      } else {
+        document.getElementById('feedbackStatus').innerHTML = `<span class="text-rose-400 flex items-center gap-1.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Incorrect</span>`;
+      }
+
+      // Highlight options
+      q.options.forEach((opt, i) => {
+        const el = document.getElementById(`option-${i}`);
+        if (opt.correct) {
+          el.className = "w-full text-left p-4 rounded-xl border border-emerald-500 bg-emerald-500/10 text-emerald-200 transition-all text-sm leading-relaxed flex items-start gap-3";
+          el.querySelector('span').className = "inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500 text-slate-900 text-xs font-bold shrink-0 mt-0.5";
+        } else if (i === selectedOptionIndex) {
+          el.className = "w-full text-left p-4 rounded-xl border border-rose-500 bg-rose-500/10 text-rose-200 transition-all text-sm leading-relaxed flex items-start gap-3";
+          el.querySelector('span').className = "inline-flex items-center justify-center w-6 h-6 rounded-full bg-rose-500 text-white text-xs font-bold shrink-0 mt-0.5";
+        } else {
+          el.className = "w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-900/20 opacity-40 transition-all text-sm leading-relaxed flex items-start gap-3 text-slate-400";
+        }
+      });
+
+      // Show explanation
+      document.getElementById('explanationText').innerText = q.explanation;
+      document.getElementById('interviewTip').innerText = q.tip;
+      document.getElementById('explanationBox').classList.remove('hidden');
+
+      // Update button
+      const actionBtn = document.getElementById('actionBtn');
+      actionBtn.innerText = currentQuestionIndex === questions.length - 1 ? 'View Final Results' : 'Next Question →';
+      actionBtn.className = "px-5 py-2.5 rounded-xl font-semibold text-sm bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition-all shadow-lg shadow-emerald-600/20";
+    }
+
+    function showResults() {
+      document.getElementById('quizCard').classList.add('hidden');
+      document.getElementById('resultsCard').classList.remove('hidden');
+      document.getElementById('finalScore').innerText = `${score} / ${questions.length}`;
+
+      let msg = "";
+      if (score >= 9) {
+        msg = "Outstanding! You demonstrate exceptional technical command across Next.js 16, React 19 RSC boundaries, AI latency patterns, and billing architecture. You are ready to crush the interview!";
+      } else if (score >= 7) {
+        msg = "Solid performance! You have strong grasp of core full-stack front-end concepts. Review the tips above for the few areas you missed before the call.";
+      } else {
+        msg = "Good effort. Take some time to review the explanations and key modules above, particularly around server-authoritative checkout and React 19 action states.";
+      }
+      document.getElementById('finalFeedback').innerText = msg;
+    }
+
+    function restartQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      document.getElementById('scoreDisplay').innerText = `0 / ${questions.length}`;
+      document.getElementById('resultsCard').classList.add('hidden');
+      document.getElementById('quizCard').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>

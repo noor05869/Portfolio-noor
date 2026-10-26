@@ -130,12 +130,12 @@ export const workExperience: Experience[] = [
       {
         name: 'Point of Sale (POS) & Operations System',
         summary: 'An operations workspace for sales, inventory, reporting, and merchant order fulfillment.',
-        impact: [{ value: 'Rs. 163M+', label: 'transaction volume' }, { value: '11K+', label: 'sales processed' }],
+        impact: [{ value: '11K+', label: 'sales processed' }, { value: 'Real-time', label: 'inventory sync' }],
         featured: true,
-        badge: 'ENTERPRISE · RS 163M+ VOLUME',
+        badge: 'ENTERPRISE · 11K+ SALES',
         bullets: [
           'Developed sales, purchasing, inventory, transaction-history, and operational reporting workflows for an enterprise web-based POS system.',
-          'Created real-time financial tracking dashboards processing over 11,000+ sales and Rs. 163M+ in transaction volume.',
+          'Created real-time financial tracking dashboards processing over 11,000+ sales transactions across retail store locations.',
           'Built an integrated order queue system with customer verification, SMS triggers, spam protection, and automated shopkeeper dispatch.',
         ],
         stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'State Management', 'REST APIs'],
@@ -150,7 +150,7 @@ export const workExperience: Experience[] = [
             src: '/workSCs/POS-2.png',
             title: 'Sales & POS Revenue Analytics Engine',
             tag: 'Financial Analytics',
-            description: 'Interactive real-time metrics tracking Rs. 163M+ in POS volume, 11K+ transactions, and monthly subscription growth curves.',
+            description: 'Interactive real-time metrics tracking store analytics, 11K+ transactions, and monthly subscription growth curves.',
           },
           {
             src: '/workSCs/POS-3.png',
