@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowDown, Check, Copy, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowDown, Check, Command, Copy, Github, Linkedin, Mail } from 'lucide-react';
 import { personalInfo } from '@/lib/data';
 import ArchitectureHub from './ArchitectureHub';
 import TelemetryBar from './TelemetryBar';
 import ProfileCard3D from './ProfileCard3D';
+import { openCommandMenu } from './CommandMenu';
 
 export default function Hero() {
   const [copied, setCopied] = useState(false);
@@ -17,43 +18,47 @@ export default function Hero() {
   };
 
   return (
-    <section id="top" className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden">
-      {/* Subtle radial ambient illumination */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/4 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-amber/5 blur-[120px]"
-      />
+    <section id="top" className="relative bg-canvas pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden">
+      {/* Subtle architectural drafting grid fading softly into alabaster */}
+      <div aria-hidden="true" className="drafting-grid pointer-events-none absolute inset-0" />
 
       <div className="page-shell relative z-10 space-y-12 sm:space-y-16">
-        {/* 1. Editorial Introduction + 3D Interactive Portrait Card */}
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-12 xl:gap-16">
-          <div className="max-w-2xl">
-            {/* Eyebrow Pill */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/[0.08] px-3.5 py-1 text-xs font-mono font-medium text-amber">
-              <span>Senior Frontend Engineer</span>
-              <span className="text-amber/40">/</span>
-              <span>AI Systems</span>
-              <span className="text-amber/40">·</span>
-              <span className="text-sand/80">4+ Years Experience</span>
+        {/* 1. Introduction + 3D Portrait Card */}
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-14 xl:gap-20">
+          <div className="max-w-xl">
+            {/* Chapter & Role Eyebrow */}
+            <div className="mb-4 flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber/25 bg-surface px-3 py-1 font-mono text-xs font-medium text-amber shadow-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-bright" />
+                <span>Senior Frontend &amp; AI Systems</span>
+              </div>
+              <button
+                type="button"
+                onClick={openCommandMenu}
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-surface px-2.5 py-1 font-mono text-[11px] text-ink-muted transition-colors hover:border-ink/25 hover:text-ink"
+              >
+                <Command size={11} />
+                <span>K to jump</span>
+              </button>
             </div>
 
             {/* Monumental Headline */}
-            <h1 className="font-display text-4xl font-bold tracking-tight text-cream sm:text-5xl lg:text-[3.5rem] lg:leading-[1.08]">
-              Architecting high-scale web apps & production AI systems.
+            <h1 className="font-display text-4xl font-bold tracking-[-0.03em] text-ink sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]">
+              Architecting high-scale web &amp; production AI.
             </h1>
 
-            {/* Subheading with verifiable impact */}
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-sand sm:text-lg">
-              I build frontend systems that are fast, tested, and built to last. Scaled{' '}
-              <strong className="font-semibold text-cream">TechBazaar.pk</strong> to 300K+ active users with a{' '}
-              <strong className="font-semibold text-amber">92+ Lighthouse score</strong>, and engineered production RAG search pipelines with FastAPI, Gemini, and Qdrant.
+            {/* Subheading - Concise & direct */}
+            <p className="mt-4 max-w-lg text-base leading-relaxed text-ink-secondary">
+              Specialized in React, Next.js, and vector search. Scaled{' '}
+              <strong className="font-semibold text-ink">TechBazaar.pk</strong> to 300K+ active users with a{' '}
+              <strong className="font-semibold text-amber">92+ Lighthouse score</strong>.
             </p>
 
             {/* Action Row */}
-            <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
-              <a href="#work" className="amber-button">
-                <span>View Selected Work</span>
-                <ArrowDown size={15} aria-hidden="true" />
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <a href="#work" className="primary-button">
+                <span>View Work</span>
+                <ArrowDown size={14} aria-hidden="true" />
               </a>
 
               <button
@@ -64,45 +69,39 @@ export default function Hero() {
               >
                 {copied ? (
                   <>
-                    <Check size={15} className="text-emerald-400" />
-                    <span className="text-emerald-400 font-mono text-xs">Copied to Clipboard!</span>
+                    <Check size={14} className="text-emerald" />
+                    <span className="text-emerald font-mono text-xs">Copied!</span>
                   </>
                 ) : (
                   <>
-                    <Mail size={15} />
+                    <Mail size={14} className="text-ink-secondary" />
                     <span>Copy Email</span>
-                    <Copy size={13} className="text-muted" />
+                    <Copy size={12} className="text-ink-muted" />
                   </>
                 )}
               </button>
 
               {/* Social Links */}
-              <div className="flex items-center gap-2 pl-1 sm:pl-2">
+              <div className="flex items-center gap-2 pl-1">
                 <a
                   href={personalInfo.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-sand transition-colors hover:border-white/20 hover:text-cream"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-ink/10 bg-surface text-ink-secondary shadow-sm transition-colors hover:border-ink/25 hover:bg-canvas-subtle hover:text-ink"
                   aria-label="GitHub profile"
                 >
-                  <Github size={17} />
+                  <Github size={16} />
                 </a>
                 <a
                   href={personalInfo.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-sand transition-colors hover:border-white/20 hover:text-cream"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-ink/10 bg-surface text-ink-secondary shadow-sm transition-colors hover:border-ink/25 hover:bg-canvas-subtle hover:text-ink"
                   aria-label="LinkedIn profile"
                 >
-                  <Linkedin size={17} />
+                  <Linkedin size={16} />
                 </a>
               </div>
-            </div>
-
-            {/* Location & Quick Context */}
-            <div className="mt-7 flex items-center gap-2 text-xs font-mono text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald" />
-              <span>Based in {personalInfo.location} · Available for Remote Full-Time & Contract Roles</span>
             </div>
           </div>
 
@@ -115,7 +114,7 @@ export default function Hero() {
         {/* 2. Key Telemetry Strip */}
         <TelemetryBar />
 
-        {/* 3. Interactive System Architecture Workbench */}
+        {/* 3. System Architecture Workbench */}
         <div className="pt-2">
           <ArchitectureHub />
         </div>

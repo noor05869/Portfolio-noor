@@ -132,3 +132,31 @@ The base specification, hero redesign patch, and CV asset routing are complete. 
   - `npm run typecheck` — passed with 0 errors.
   - `npm run lint` — passed with 0 warnings.
   - Next.js dev server live at `http://localhost:3001` (HTTP 200 OK).
+
+
+## Light Theme Conversion ("Editorial Stone & Ink") — 2026-11-10
+
+- **Benchmarks & Rules**: Modeled on senior engineer light-mode portfolios (`emilkowal.ski`, `paco.me`, `leerob.com`, `rauno.me`) and `impeccable.style` guidelines.
+- **OKLCH Warm Stone & Ink Palette**:
+  - Replaced pure black/white extremes with warm alabaster canvas (`#faf9f6`), recessed warm stone (`#f3f1ec`), elevated paper (`#fdfcfa`), and rich carbon ink (`#181816`).
+  - Upgraded primary accent to WCAG AA/AAA compliant Burnt Amber (`#b45309`, 5.3:1 contrast on alabaster) and Forest Emerald (`#047857`) status indicators.
+- **Typography & Light-Mode Craft**:
+  - Loaded `JetBrains Mono` via `next/font/google` alongside `Space Grotesk` and `Inter`.
+  - Enabled `tabular-nums` on telemetry metrics, latency figures, and indices.
+  - Replaced dark glow shadows with soft directional studio shadows and `1px` hairline stone borders.
+- **Components Updated**: `PortfolioApp`, `Navbar`, `Hero`, `ProfileCard3D` (studio ivory print frame), `TelemetryBar`, `ArchitectureHub` (light IDE inspector), `ProjectGallery` (recessed studio stage & light fullscreen modal), `Work`, `Skills`, `About`, `Contact`, and `Footer`.
+
+## Creative Craft & Distinct Section Architecture — 2026-11-10
+
+- **Alternating Surface Cadence & Section Signatures**:
+  - **00 · Hero (`#top`)**: Warm alabaster (`#faf9f6`) with subtle 48px `.drafting-grid` architectural graph hairlines.
+  - **01 · Selected Work (`#work`)**: Warm recessed stone (`#f3f1ec`) framing elevated `#fdfcfa` showcase prints, plus spring-animated project filter tabs (`All Work`, `Live Products`, `AI & Systems`).
+  - **02 · Engineering Stack (`#skills`)**: Alabaster (`#faf9f6`) 2-pane interactive **System Layers & Tooling Spec** (`L1`–`L5` layer index + live architectural specification card).
+  - **03 · Mindset & Experience (`#about`)**: Warm stone (`#f3f1ec`) overlaid with `.dot-grid` matrix, numbered engineering principles (`P-01`–`P-03`), and hairline career timeline.
+  - **04 · Contact (`#contact`)**: High-contrast **Carbon Ink (`#181816`) Studio Monolith** featuring a live local PKT (`UTC+5`) clock and 1-click email copy.
+- **Quick Command Palette (`CommandMenu.tsx`)**: Added `⌘K` / `Ctrl+K` keyboard launcher accessible from the navbar and hero for instant jumping across sections, featured projects, and quick actions.
+
+## CV Downloadable Asset Replacement — 2026-11-10
+
+- Replaced [`public/noor-ullah-cv.pdf`](file:///d:/Portfolio-noor/public/noor-ullah-cv.pdf) with the newly uploaded CV (`167,145` bytes) for downloadable CV links (`Navbar`, `Footer`, and `CommandMenu`).
+- Kept all existing portfolio skills and project copy unchanged per user instruction.

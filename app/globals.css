@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --bg-canvas: #08090c;
-  --bg-surface: #11141d;
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --accent: #f59e0b;
+  --bg-canvas: oklch(98.5% 0.004 85);
+  --bg-surface: oklch(99.4% 0.002 85);
+  --text-primary: oklch(19% 0.008 85);
+  --text-secondary: oklch(42% 0.010 85);
+  --text-muted: oklch(54% 0.008 85);
+  --accent: oklch(52% 0.16 48);
 }
 
 * {
@@ -18,15 +18,15 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
-  background-color: var(--bg-canvas);
-  color: var(--text-primary);
+  background-color: #faf9f6;
+  color: #181816;
 }
 
 body {
   margin: 0;
   overflow-x: hidden;
-  background-color: #08090c;
-  color: #f9fafb;
+  background-color: #faf9f6;
+  color: #181816;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -37,13 +37,13 @@ a, button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid #b45309;
   outline-offset: 3px;
 }
 
 ::selection {
-  background: rgba(245, 158, 11, 0.25);
-  color: #ffffff;
+  background: rgba(180, 83, 9, 0.14);
+  color: #181816;
 }
 
 ::-webkit-scrollbar {
@@ -51,46 +51,60 @@ a, button {
 }
 
 ::-webkit-scrollbar-track {
-  background: #08090c;
+  background: #faf9f6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #232a3b;
+  background: #d6d3cb;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: #b8b4aa;
 }
 
 @layer components {
   .page-shell {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-10;
   }
-  
+
   .section-space {
-    @apply py-20 sm:py-28 lg:py-32;
-  }
-  
-  .section-label {
-    @apply mb-4 inline-flex items-center gap-2.5 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-amber;
+    @apply py-20 sm:py-24 lg:py-28;
   }
 
-  .amber-button {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-amber/40 bg-amber/10 px-5 py-2.5 font-body text-sm font-semibold text-amber shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-150 hover:border-amber/80 hover:bg-amber hover:text-black hover:shadow-[0_0_24px_rgba(245,158,11,0.25)] active:scale-[0.98];
+  .section-label {
+    @apply mb-3 inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-amber;
+  }
+
+  .primary-button {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ink bg-ink px-5 py-2.5 font-body text-sm font-medium text-canvas shadow-sm transition-all duration-150 hover:bg-ink/90 active:scale-[0.98];
   }
 
   .secondary-button {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-5 py-2.5 font-body text-sm font-medium text-sand shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all duration-150 hover:border-white/20 hover:bg-white/[0.08] hover:text-cream active:scale-[0.98];
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ink/15 bg-surface px-5 py-2.5 font-body text-sm font-medium text-ink shadow-sm transition-all duration-150 hover:border-ink/25 hover:bg-canvas-subtle active:scale-[0.98];
   }
 
   .tag {
-    @apply inline-flex items-center rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-xs text-sand transition-colors duration-150 hover:border-amber/40 hover:bg-amber/[0.08] hover:text-amber;
+    @apply inline-flex items-center rounded-md border border-ink/[0.08] bg-canvas-subtle px-2.5 py-1 font-mono text-xs text-ink-secondary transition-colors duration-150 hover:border-amber/30 hover:bg-amber/[0.07] hover:text-amber;
   }
 }
 
+.drafting-grid {
+  background-image:
+    linear-gradient(to right, rgba(24, 24, 22, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(24, 24, 22, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 85% 70% at 50% 25%, black 20%, transparent 100%);
+}
+
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(24, 24, 22, 0.085) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+}
+
 .gallery-control {
-  @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-sand transition-all duration-150 hover:border-amber/40 hover:bg-amber/10 hover:text-amber active:scale-95 disabled:cursor-not-allowed disabled:opacity-30;
+  @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-ink/10 bg-surface text-ink-secondary transition-all duration-150 hover:border-amber/40 hover:bg-amber/[0.08] hover:text-amber active:scale-95 disabled:cursor-not-allowed disabled:opacity-35;
 }
 
 .project-details summary::-webkit-details-marker {
@@ -106,16 +120,16 @@ a, button {
   max-width: none;
   max-height: 94dvh;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(24, 24, 22, 0.14);
   border-radius: 1rem;
-  background: #0b0d13;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+  background: #faf9f6;
+  box-shadow: 0 25px 50px -12px rgba(24, 24, 22, 0.25);
   overflow: visible;
   margin: auto;
 }
 
 .project-viewer::backdrop {
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(24, 24, 22, 0.45);
   backdrop-filter: blur(8px);
 }
 

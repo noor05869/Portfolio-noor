@@ -1,138 +1,218 @@
 'use client';
 
-import { Bot, CheckCircle2, Cpu, Database, Layers, ShieldCheck, Terminal, Zap } from 'lucide-react';
-import { skillGroups } from '@/lib/data';
+import { useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ArrowRight, Bot, CheckCircle2, Cpu, Database, Layers, ShieldCheck } from 'lucide-react';
 import Reveal from './Reveal';
 
 const systemCategories = [
   {
-    title: 'Frontend Architecture & Web Platforms',
+    layer: 'L1',
+    title: 'Frontend & Web Platforms',
     icon: Layers,
-    description: 'Component architecture, streaming SSR, performance budgets, and responsive design systems.',
+    summary: 'Streaming SSR interfaces, accessible design primitives, and cross-platform mobile apps.',
     highlight: 'Next.js 14+ · React 18/19 · TypeScript · Tailwind CSS',
     skills: ['TypeScript', 'React.js', 'Next.js (App Router)', 'Tailwind CSS', 'Angular', 'React Native', 'Expo Router', 'HTML5 / Modern CSS'],
     telemetry: '92+ Lighthouse Target',
+    appliedIn: 'TechBazaar.pk · Pixels Galaxy · Gatekeeper',
   },
   {
-    title: 'AI, RAG & Vector Retrieval Systems',
+    layer: 'L2',
+    title: 'AI, RAG & Vector Systems',
     icon: Bot,
     featured: true,
-    description: 'End-to-end semantic search, intent extraction, local vector embeddings, and LLM tool calling.',
+    summary: 'Semantic product retrieval, local CPU embeddings, and structured Gemini intent parsing.',
     highlight: 'FastAPI · LangChain · Gemini API · Qdrant Vector DB',
     skills: ['FastAPI', 'LangChain (LCEL)', 'Google Gemini API', 'Qdrant Vector DB', 'OpenAI Assistants & Tools', 'HuggingFace Embeddings', 'RAG Pipelines', 'Pydantic v2'],
     telemetry: 'Zero-Cost Local Embeddings',
+    appliedIn: 'TechVault AI Search · AI Shopping Assistant',
   },
   {
-    title: 'State Architecture, Caching & Data Flow',
+    layer: 'L3',
+    title: 'State & Data Flow',
     icon: Cpu,
-    description: 'Atomic state management, cache invalidation, defensive schema validation, and optimistic UI mutations.',
+    summary: 'Atomic client state selectors, server-cache invalidation, and defensive form validation.',
     highlight: 'TanStack Query v5 · Zustand · Zod · React Hook Form',
     skills: ['TanStack Query v5', 'Zustand', 'Redux Toolkit', 'Zod', 'React Hook Form', 'Radix UI Primitives', 'Axios'],
     telemetry: 'Optimistic UI Updates',
+    appliedIn: '40K+ Catalog Grid · Real-time Cart',
   },
   {
-    title: 'Backend Services, APIs & Storage',
+    layer: 'L4',
+    title: 'Backend & Storage',
     icon: Database,
-    description: 'Serverless functions, RESTful API design, relational data modeling, and vector indexes.',
+    summary: 'Server-authoritative checkout checks, relational modeling, and sub-50ms cache layers.',
     highlight: 'Node.js · NestJS · Supabase · Redis · PostgreSQL',
     skills: ['Node.js', 'NestJS', 'PostgreSQL', 'Supabase', 'Redis Caching', 'MySQL', 'REST APIs'],
-    telemetry: 'Authoritative Server Checks',
+    telemetry: 'Authoritative Checks',
+    appliedIn: 'POS Operations · Pixels Galaxy Checkout',
   },
   {
-    title: 'Automated Testing, Quality & Tooling',
+    layer: 'L5',
+    title: 'Testing & Infrastructure',
     icon: ShieldCheck,
-    description: 'Unit testing, component isolation, end-to-end integration, and continuous deployment workflows.',
+    summary: 'End-to-end automated regression suites, containerized deployments, and CI pipelines.',
     highlight: 'Vitest · Playwright · Jest · Docker · GitHub Actions',
     skills: ['Vitest', 'Jest', 'React Testing Library', 'Playwright', 'Docker Compose', 'GitHub Actions', 'Postman'],
     telemetry: 'Automated CI/CD',
+    appliedIn: 'Multi-service Docker · E2E Checkout Flows',
   },
 ];
 
 export default function Skills() {
+  const [selectedIndex, setSelectedIndex] = useState(1);
+  const reduceMotion = useReducedMotion();
+  const active = systemCategories[selectedIndex];
+  const ActiveIcon = active.icon;
+
   return (
-    <section id="skills" className="section-space relative border-t border-white/10">
+    <section id="skills" className="section-space relative border-t border-ink/[0.08] bg-canvas">
       <div className="page-shell">
         <Reveal>
-          <div className="mb-12 max-w-2xl">
-            <span className="section-label">Engineering Stack</span>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-cream sm:text-4xl">
-              Architectural toolkit & technical depth.
-            </h2>
-            <p className="mt-3 text-sm sm:text-base leading-relaxed text-sand">
-              Technologies chosen for reliability, developer ergonomics, and high-scale production performance. Every tool in this stack is backed by delivered, production code.
+          <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="font-mono text-xs font-bold text-amber tabular-nums">02</span>
+                <span className="h-px w-8 bg-ink/15" />
+                <span className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-ink-muted">
+                  Engineering Stack
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+                System Layers &amp; Tooling.
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm text-ink-secondary">
+              Select a layer to inspect its architectural stack and production footprint.
             </p>
           </div>
         </Reveal>
 
-        {/* Structured Engineering Grid */}
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {systemCategories.map((cat, index) => {
-            const Icon = cat.icon;
-            const isWide = cat.featured || index === 0;
-
-            return (
-              <Reveal
-                key={cat.title}
-                delay={index * 0.06}
-                className={isWide ? 'md:col-span-2 lg:col-span-2' : ''}
-              >
-                <div
-                  className={`group relative flex h-full flex-col justify-between rounded-xl border p-6 sm:p-7 shadow-card transition-all duration-200 hover:border-amber/40 hover:bg-surface-elevated/90 ${
-                    cat.featured
-                      ? 'border-amber/30 bg-surface/90'
-                      : 'border-white/10 bg-surface/70'
+        {/* 2-Pane Interactive Stack Spec */}
+        <div className="grid gap-6 lg:grid-cols-[330px_1fr] lg:items-stretch">
+          {/* Left Column: Layer Index */}
+          <div className="flex flex-row gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0" role="tablist" aria-label="System architecture layers">
+            {systemCategories.map((cat, idx) => {
+              const Icon = cat.icon;
+              const isSelected = selectedIndex === idx;
+              return (
+                <button
+                  key={cat.layer}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  onClick={() => setSelectedIndex(idx)}
+                  className={`group relative flex shrink-0 items-center justify-between gap-3 rounded-xl border px-4 py-3.5 text-left transition-colors lg:w-full ${
+                    isSelected
+                      ? 'border-ink/20 bg-surface text-ink shadow-card'
+                      : 'border-ink/[0.07] bg-canvas-subtle/60 text-ink-secondary hover:border-ink/15 hover:bg-surface'
                   }`}
                 >
-                  <div>
-                    {/* Header with Icon and Telemetry badge */}
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-amber/30 bg-amber/10 text-amber shadow-sm">
-                          <Icon size={18} />
-                        </span>
-                        <div>
-                          <h3 className="font-display text-base font-bold text-cream">
-                            {cat.title}
-                          </h3>
-                          <span className="font-mono text-[11px] text-amber font-medium">
-                            {cat.highlight}
-                          </span>
-                        </div>
-                      </div>
+                  {isSelected && (
+                    <motion.span
+                      layoutId="stack-active-bar"
+                      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                      className="hidden lg:block absolute left-0 top-2.5 bottom-2.5 w-1 rounded-r-full bg-amber"
+                    />
+                  )}
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span
+                      className={`font-mono text-xs font-bold tabular-nums ${
+                        isSelected ? 'text-amber' : 'text-ink-muted'
+                      }`}
+                    >
+                      {cat.layer}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="font-display text-sm font-bold truncate">{cat.title}</p>
+                      <p className="hidden lg:block font-mono text-[10px] text-ink-muted truncate">
+                        {cat.skills.slice(0, 3).join(' · ')}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="hidden lg:flex items-center gap-2 shrink-0">
+                    <Icon size={15} className={isSelected ? 'text-amber' : 'text-ink-muted'} />
+                    <ArrowRight
+                      size={13}
+                      className={`transition-transform ${
+                        isSelected ? 'text-ink translate-x-0.5' : 'text-ink-muted opacity-0 group-hover:opacity-100'
+                      }`}
+                    />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
 
-                      {cat.featured && (
-                        <span className="hidden sm:inline-flex items-center gap-1 rounded-full border border-amber/40 bg-amber/15 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-amber">
-                          Core Specialization
-                        </span>
-                      )}
+          {/* Right Column: Live Layer Specification Panel */}
+          <div className="rounded-2xl border border-ink/10 bg-surface p-6 sm:p-8 shadow-card flex flex-col justify-between">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active.layer}
+                initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: 0.16, ease: 'easeOut' }}
+                className="flex h-full flex-col justify-between space-y-6"
+              >
+                <div className="space-y-5">
+                  {/* Top Badge Row */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ink/[0.08] pb-4">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber/25 bg-amber/[0.08] text-amber">
+                        <ActiveIcon size={18} />
+                      </span>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-xs font-bold text-amber">{active.layer}</span>
+                          <h3 className="font-display text-xl font-bold text-ink">{active.title}</h3>
+                        </div>
+                        <p className="font-mono text-xs text-ink-muted">{active.highlight}</p>
+                      </div>
                     </div>
 
-                    <p className="mt-4 text-xs leading-relaxed text-sand">
-                      {cat.description}
-                    </p>
+                    {active.featured && (
+                      <span className="inline-flex items-center rounded-full border border-amber/30 bg-amber/[0.08] px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-amber">
+                        Core Focus
+                      </span>
+                    )}
+                  </div>
 
-                    {/* Skill Tags */}
-                    <div className="mt-5 flex flex-wrap gap-1.5">
-                      {cat.skills.map((skill) => (
-                        <span key={skill} className="tag text-xs">
+                  {/* Summary */}
+                  <p className="text-sm sm:text-base leading-relaxed text-ink-secondary">
+                    {active.summary}
+                  </p>
+
+                  {/* Interactive Technology Chips */}
+                  <div>
+                    <p className="mb-2.5 font-mono text-[11px] uppercase tracking-wider text-ink-muted">
+                      Core Technologies
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {active.skills.map((skill) => (
+                        <span key={skill} className="tag text-xs py-1.5 px-3">
                           {skill}
                         </span>
                       ))}
                     </div>
                   </div>
+                </div>
 
-                  {/* Card Footer */}
-                  <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 font-mono text-[11px] text-muted">
-                    <span className="flex items-center gap-1.5 text-sand">
-                      <CheckCircle2 size={13} className="text-emerald" />
-                      Production Tested
+                {/* Spec Footer */}
+                <div className="grid gap-3 border-t border-ink/[0.08] pt-5 sm:grid-cols-2 font-mono text-xs">
+                  <div className="flex items-center gap-2 text-ink-secondary">
+                    <CheckCircle2 size={14} className="text-emerald shrink-0" />
+                    <span>{active.appliedIn}</span>
+                  </div>
+                  <div className="sm:text-right">
+                    <span className="inline-flex items-center rounded-md border border-amber/20 bg-amber/[0.06] px-2.5 py-1 font-semibold text-amber">
+                      {active.telemetry}
                     </span>
-                    <span className="text-amber font-semibold">{cat.telemetry}</span>
                   </div>
                 </div>
-              </Reveal>
-            );
-          })}
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>
