@@ -62,13 +62,13 @@ const ALL_SKILLS: SkillItem[] = [
   { name: 'Firebase', label: 'Firebase', category: 'testing-devops' },
 ];
 
-const CATEGORIES: { id: SkillCategory; label: string }[] = [
-  { id: 'all', label: 'All Stack' },
-  { id: 'frontend', label: 'Frontend & Mobile' },
-  { id: 'ai', label: 'AI & Systems' },
-  { id: 'backend', label: 'Backend & DBs' },
-  { id: 'state', label: 'State & Architecture' },
-  { id: 'testing-devops', label: 'Testing & DevOps' },
+const CATEGORIES: { id: SkillCategory; label: string; count: number }[] = [
+  { id: 'all', label: 'All Stack', count: ALL_SKILLS.length },
+  { id: 'frontend', label: 'Frontend & Mobile', count: ALL_SKILLS.filter(s => s.category === 'frontend').length },
+  { id: 'ai', label: 'AI & Systems', count: ALL_SKILLS.filter(s => s.category === 'ai').length },
+  { id: 'backend', label: 'Backend & DBs', count: ALL_SKILLS.filter(s => s.category === 'backend').length },
+  { id: 'state', label: 'State & Architecture', count: ALL_SKILLS.filter(s => s.category === 'state').length },
+  { id: 'testing-devops', label: 'Testing & DevOps', count: ALL_SKILLS.filter(s => s.category === 'testing-devops').length },
 ];
 
 export default function Skills() {
@@ -84,25 +84,26 @@ export default function Skills() {
     <section id="skills" className="section-space relative border-t border-ink/[0.08] bg-canvas">
       <div className="page-shell">
         <Reveal>
-          <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="mb-2.5 flex items-center gap-3">
-                <span className="font-mono text-xs font-bold text-amber tabular-nums">02</span>
-                <span className="h-px w-8 bg-ink/15" />
-                <span className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-ink-muted">
-                  Technical Stack
-                </span>
-              </div>
-              <h2 className="font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-                Skills &amp; Technologies.
-              </h2>
+          {/* Header Row */}
+          <div className="mb-6">
+            <div className="mb-2.5 flex items-center gap-3">
+              <span className="font-mono text-xs font-bold text-amber tabular-nums">02</span>
+              <span className="h-px w-8 bg-ink/15" />
+              <span className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-ink-muted">
+                Technical Stack
+              </span>
             </div>
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              Skills &amp; Technologies.
+            </h2>
+          </div>
 
-            {/* Category Filter Pills */}
+          {/* Proper Single-Row Tabs with Clean Borders */}
+          <div className="mb-8 border-b border-ink/[0.08] pb-4">
             <div
               role="tablist"
               aria-label="Filter skills by domain"
-              className="flex flex-wrap items-center gap-1 rounded-xl border border-ink/10 bg-surface p-1 shadow-xs"
+              className="flex flex-nowrap items-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
               {CATEGORIES.map((cat) => {
                 const active = activeCategory === cat.id;
@@ -113,13 +114,22 @@ export default function Skills() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`rounded-lg px-2.5 py-1 font-mono text-xs transition-colors ${
+                    className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg border px-3.5 py-1.5 font-mono text-xs transition-all duration-150 active:scale-[0.98] ${
                       active
-                        ? 'bg-ink text-canvas font-semibold shadow-xs'
-                        : 'text-ink-secondary hover:text-ink'
+                        ? 'border-ink bg-ink text-canvas font-semibold shadow-xs'
+                        : 'border-ink/15 bg-surface text-ink-secondary hover:border-ink/30 hover:bg-canvas-subtle hover:text-ink'
                     }`}
                   >
-                    {cat.label}
+                    <span>{cat.label}</span>
+                    <span
+                      className={`rounded-full px-1.5 py-0.2 font-mono text-[10px] tabular-nums font-semibold ${
+                        active
+                          ? 'bg-canvas/20 text-amber'
+                          : 'bg-ink/[0.06] text-ink-muted'
+                      }`}
+                    >
+                      {cat.count}
+                    </span>
                   </button>
                 );
               })}
